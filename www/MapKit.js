@@ -35,33 +35,33 @@
 	MapKit.prototype = {
 		showMap: function(success, error, options) {
 			if (options) {
-				exec(success, error, 'MapKit', 'showMap', [options]);
+				cordovaRef.exec(success, error, 'MapKit', 'showMap', [options]);
 			} else {
-				exec(success, error, 'MapKit', 'showMap', [this.options]);
+				cordovaRef.exec(success, error, 'MapKit', 'showMap', [this.options]);
 			}
 		},
 	
 		addMapPins: function(pins, success, error) {
-			exec(success, error, 'MapKit', 'addMapPins', [pins]);
+			cordovaRef.exec(success, error, 'MapKit', 'addMapPins', [pins]);
 		},
 	
 		clearMapPins: function(success, error) {
-			exec(success, error, 'MapKit', 'clearMapPins', []);
+			cordovaRef.exec(success, error, 'MapKit', 'clearMapPins', []);
 		},
 	
 		hideMap: function(success, error) {
-			exec(success, error, 'MapKit', 'hideMap', []);
+			cordovaRef.exec(success, error, 'MapKit', 'hideMap', []);
 		},
 	
 		changeMapType: function(mapType, success, error) {
-			exec(success, error, 'MapKit', 'changeMapType', [mapType ? { "mapType": mapType } :{ "mapType": 0 }]);
+			cordovaRef.exec(success, error, 'MapKit', 'changeMapType', [mapType ? { "mapType": mapType } :{ "mapType": 0 }]);
 		},
 		
 		setMapData: function(success, error, options) {
 			if (options) {
-				exec(success, error, 'MapKit', 'setMapData', [options]);
+				cordovaRef.exec(success, error, 'MapKit', 'setMapData', [options]);
 			} else {
-				exec(success, error, 'MapKit', 'setMapData', [this.options]);
+				cordovaRef.exec(success, error, 'MapKit', 'setMapData', [this.options]);
 			}
 		}
 	
