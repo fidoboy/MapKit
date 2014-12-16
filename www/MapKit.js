@@ -1,6 +1,13 @@
 var exec = require('cordova/exec');
 
 var MapKit = function() {
+	this.options = {
+		height: 460,
+		diameter: 1000,
+		atBottom: true,
+		lat: 41.652947,
+		lon: -4.728388
+	};
 	this.mapType = {
 		MAP_TYPE_NONE: 0, //No base map tiles.
 		MAP_TYPE_NORMAL: 1, //Basic maps.
@@ -23,30 +30,13 @@ var MapKit = function() {
 	};
 };
 
-// Returns default params, overrides if provided with values
-function setDefaults(options) {
-    var defaults = {
-        height: 460,
-		diameter: 1000,
-		atBottom: true,
-		lat: 49.281468,
-		lon: -123.104446
-    };
-
-    if (options) {
-        for(var i in defaults) 
-            if(typeof options[i] === "undefined") 
-                options[i] = defaults[i];
-    }
-
-    return options;
-}
-
 MapKit.prototype = {
-
 	showMap: function(success, error, options) {
-	    options = setDefaults(options);
-		exec(success, error, 'MapKit', 'showMap', [options]);
+		if (options) {
+			cordovaRef.exec(success, error, 'MapKit', 'showMap', [options]);
+		} else {
+			cordovaRef.exec(success, error, 'MapKit', 'showMap', [this.options]);
+		}
 	},
 
 	addMapPins: function(pins, success, error) {
@@ -63,6 +53,14 @@ MapKit.prototype = {
 
 	changeMapType: function(mapType, success, error) {
 		exec(success, error, 'MapKit', 'changeMapType', [mapType ? { "mapType": mapType } :{ "mapType": 0 }]);
+	},
+	
+	setMapData: function(success, error, options) {
+		if (options) {
+			cordovaRef.exec(success, error, 'MapKit', 'setMapData', [options]);
+		} else {
+			cordovaRef.exec(success, error, 'MapKit', 'setMapData', [this.options]);
+		}
 	}
 
 };
