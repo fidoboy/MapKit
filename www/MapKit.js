@@ -33,9 +33,9 @@ var MapKit = function() {
 MapKit.prototype = {
 	showMap: function(success, error, options) {
 		if (options) {
-			cordovaRef.exec(success, error, 'MapKit', 'showMap', [options]);
+			exec(success, error, 'MapKit', 'showMap', [options]);
 		} else {
-			cordovaRef.exec(success, error, 'MapKit', 'showMap', [this.options]);
+			exec(success, error, 'MapKit', 'showMap', [this.options]);
 		}
 	},
 
@@ -57,9 +57,9 @@ MapKit.prototype = {
 	
 	setMapData: function(success, error, options) {
 		if (options) {
-			cordovaRef.exec(success, error, 'MapKit', 'setMapData', [options]);
+			exec(success, error, 'MapKit', 'setMapData', [options]);
 		} else {
-			cordovaRef.exec(success, error, 'MapKit', 'setMapData', [this.options]);
+			exec(success, error, 'MapKit', 'setMapData', [this.options]);
 		}
 	}
 
