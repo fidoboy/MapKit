@@ -44,7 +44,7 @@ public class MapKit extends CordovaPlugin {
 	int height = 460;
 	boolean atBottom = false;
 	int offsetTop = 0;
-	int zoomLevel = 0;
+	int zoomLevel = 17.0;
 	boolean infoWindowOpen = true;
 
 	@Override
@@ -79,7 +79,7 @@ public class MapKit extends CordovaPlugin {
 							
 							MapsInitializer.initialize(cordova.getActivity());
 							
-							LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height);
+							mapView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
 							mapView.setPadding(0, offsetTop, 0, 0);
 							mapView.onCreate(null);
 							mapView.onResume();
