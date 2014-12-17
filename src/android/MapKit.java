@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
@@ -94,7 +95,7 @@ public class MapKit extends CordovaPlugin {
 							}
 							//params.gravity = Gravity.TOP | Gravity.LEFT;
 							
-							mapView.setOrientation(LinearLayout.VERTICAL);    
+							//mapView.setOrientation(LinearLayout.VERTICAL);    
 							//mapView.setLayoutParams(params);
 							mapView.onCreate(null);
 							mapView.onResume();
