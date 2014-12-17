@@ -436,6 +436,12 @@ public class MapKit extends CordovaPlugin {
         }
         super.onPause(multitasking);
     }
+    
+    @Override
+    public void onBackPressed() {
+	super.onBackPressed();
+	mapView.onDestroy();
+    }
 
     @Override
     public void onResume(boolean multitasking) {
