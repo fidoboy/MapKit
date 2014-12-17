@@ -1,4 +1,4 @@
-(function(window) {
+(function() {
 	var cordovaRef = window.PhoneGap || window.Cordova || window.cordova; // old to new fallbacks
 	
 	var MapKit = function() {
