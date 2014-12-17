@@ -80,8 +80,6 @@ public class MapKit extends CordovaPlugin {
                                     new GoogleMapOptions());
                             root = (ViewGroup) webView.getParent();
                             root.removeView(webView);
-                            webView.setBackgroundColor(Color.TRANSPARENT);
-                            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                             main.addView(webView);
 
                             cordova.getActivity().setContentView(main);
@@ -101,7 +99,9 @@ public class MapKit extends CordovaPlugin {
                             }
                             params.addRule(RelativeLayout.CENTER_HORIZONTAL,
                                     RelativeLayout.TRUE);
-
+                                    
+			    mapView.setBackgroundColor(Color.TRANSPARENT);
+                            mapView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                             mapView.setLayoutParams(params);
                             mapView.onCreate(null);
                             mapView.onResume(); // FIXME: I wish there was a better way
@@ -109,7 +109,7 @@ public class MapKit extends CordovaPlugin {
                             main.addView(mapView);
                             
                             mapView.getMap().setMyLocationEnabled(true);
-							mapView.getMap().getUiSettings().setMyLocationButtonEnabled(false);
+			    mapView.getMap().getUiSettings().setMyLocationButtonEnabled(false);
 
                             // Moving the map to lot, lon
                             mapView.getMap().moveCamera(
