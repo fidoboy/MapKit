@@ -438,15 +438,15 @@ public class MapKit extends CordovaPlugin {
         super.onPause(multitasking);
     }
     
-    @Override
-    public void onBackPressed() {
-    	if(webView.canGoBack()){
-            webView.goBack();
-        }else{
-            finish();
-        }
-	super.onBackPressed();
-    }
+    //@Override
+    //public void onBackPressed() {
+    //	if(webView.canGoBack()){
+    //        webView.goBack();
+    //    }else{
+    //        finish();
+    //    }
+//	super.onBackPressed();
+  //  }
 
     @Override
     public void onResume(boolean multitasking) {
