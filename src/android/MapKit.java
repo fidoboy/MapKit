@@ -34,7 +34,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.VisibleRegion;
 
 public class MapKit extends CordovaPlugin {
-	//protected ViewGroup root; // original Cordova layout
 	protected LinearLayout main; // new layout to support map
 	protected MapView mapView;
 	private CallbackContext cCtx;
@@ -78,55 +77,16 @@ public class MapKit extends CordovaPlugin {
 							mapView = new MapView(cordova.getActivity(),
 								new GoogleMapOptions());
 							
-							// Main container layout
-							// LinearLayout main = new LinearLayout(cordova.getActivity());
-							//main.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-							//main.setOrientation(LinearLayout.VERTICAL);
-							//main.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
-							//main.setVerticalGravity(Gravity.CENTER_VERTICAL);
-							
 							MapsInitializer.initialize(cordova.getActivity());
 							
 							LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height);
-							if (atBottom) {
-								mapView.setPadding(0, offsetTop, 0, 0);
-							} else {
-								mapView.setPadding(0, offsetTop, 0, 0);
-							}
-							//params.gravity = Gravity.TOP | Gravity.LEFT;
-							
-							//mapView.setOrientation(LinearLayout.VERTICAL);    
-							//mapView.setLayoutParams(params);
+							mapView.setPadding(0, offsetTop, 0, 0);
 							mapView.onCreate(null);
 							mapView.onResume();
 							
 							ViewGroup parentView = (ViewGroup) webView.getParent();
 							parentView.addView(mapView);
-			                                                
-							/*cordova.getActivity().setContentView(main);
-							
-							MapsInitializer.initialize(cordova.getActivity());
-							
-							LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-							    LayoutParams.MATCH_PARENT, height);
-							if (atBottom) {
-							params.addRule(LinearLayout.ALIGN_PARENT_BOTTOM,
-							        LinearLayout.TRUE);
-							mapView.setPadding(0, offsetTop, 0, 0);
-							} else {
-							params.addRule(LinearLayout.ALIGN_PARENT_TOP,
-							        LinearLayout.TRUE);
-							mapView.setPadding(0, offsetTop, 0, 0);
-							}
-							params.addRule(LinearLayout.CENTER_HORIZONTAL,
-							    LinearLayout.TRUE);
-							    
-							mapView.setLayoutParams(params);
-							mapView.onCreate(null);
-							mapView.onResume(); // FIXME: I wish there was a better way
-							                // than this...*/
-							//main.addView(mapView);
-							
+			                                
 							mapView.getMap().setMyLocationEnabled(false);
 							mapView.getMap().getUiSettings().setMyLocationButtonEnabled(true);
 							
@@ -249,18 +209,6 @@ public class MapKit extends CordovaPlugin {
 
 					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 							LayoutParams.MATCH_PARENT, height + offsetTop);
-					/*if (atBottom) {
-						params.addRule(LinearLayout.ALIGN_PARENT_BOTTOM,
-								LinearLayout.TRUE);
-						mapView.setPadding(0, offsetTop, 0, 0);
-					} else {
-						params.addRule(LinearLayout.ALIGN_PARENT_TOP,
-								LinearLayout.TRUE);
-						mapView.setPadding(0, offsetTop, 0, 0);
-					}
-					params.addRule(LinearLayout.CENTER_HORIZONTAL,
-							LinearLayout.TRUE);
-					*/
 					mapView.setLayoutParams(params);
 
 					mapView.getMap().animateCamera(
@@ -290,10 +238,7 @@ public class MapKit extends CordovaPlugin {
 						cCtx.success();
 					} else {
 						mapView.onDestroy();
-						//main.removeView(webView);
 						main.removeView(mapView);
-						//root.addView(webView);
-						//cordova.getActivity().setContentView(root);
 						mapView = null;
 						cCtx.success();
 					}
@@ -455,16 +400,6 @@ public class MapKit extends CordovaPlugin {
 		super.onPause(multitasking);
 	}
     
-	//@Override
-	//public void onBackPressed() {
-	//	if(webView.canGoBack()){
-	//        webView.goBack();
-	//    }else{
-	//        finish();
-	//    }
-	//	super.onBackPressed();
-	//  }
-
 	@Override
 	public void onResume(boolean multitasking) {
 		LOG.d(TAG, "MapKitPlugin::onResume()");
