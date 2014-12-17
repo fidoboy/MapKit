@@ -62,7 +62,7 @@ public class MapKit extends CordovaPlugin {
 			        		mapView.setVisibility(mapView.VISIBLE);
 			        	} else {
 						try {
-							height = options.getInt("height");
+							height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,options.getInt("height"), cordova.getActivity().getResources().getDisplayMetrics());
 							latitude = options.getDouble("lat");
 							longitude = options.getDouble("lon");
 							offsetTop = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, options.getInt("offsetTop"), cordova.getActivity().getResources().getDisplayMetrics());
