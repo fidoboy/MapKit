@@ -44,7 +44,7 @@ public class MapKit extends CordovaPlugin {
 	int height = 460;
 	boolean atBottom = false;
 	int offsetTop = 0;
-	int zoomLevel = 17.0;
+	int zoomLevel = 17;
 	boolean infoWindowOpen = true;
 
 	@Override
