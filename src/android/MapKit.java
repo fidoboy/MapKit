@@ -239,7 +239,7 @@ public class MapKit extends CordovaPlugin {
 
 					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 							LayoutParams.MATCH_PARENT, height + offsetTop);
-					if (atBottom) {
+					/*if (atBottom) {
 						params.addRule(LinearLayout.ALIGN_PARENT_BOTTOM,
 								LinearLayout.TRUE);
 						mapView.setPadding(0, offsetTop, 0, 0);
@@ -250,7 +250,7 @@ public class MapKit extends CordovaPlugin {
 					}
 					params.addRule(LinearLayout.CENTER_HORIZONTAL,
 							LinearLayout.TRUE);
-
+					*/
 					mapView.setLayoutParams(params);
 
 					mapView.getMap().animateCamera(
