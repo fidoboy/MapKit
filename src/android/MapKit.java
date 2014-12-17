@@ -46,7 +46,7 @@ public class MapKit extends CordovaPlugin {
 	boolean atBottom = false;
 	int offsetTop = 0;
 	int zoomLevel = 0;
-	boolean infoWindowOpen = false;
+	boolean infoWindowOpen = true;
 
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -67,7 +67,7 @@ public class MapKit extends CordovaPlugin {
 							latitude = options.getDouble("lat");
 							longitude = options.getDouble("lon");
 							offsetTop = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, options.getInt("offsetTop"), cordova.getActivity().getResources().getDisplayMetrics());
-							    		zoomLevel = options.getInt("zoomLevel");
+							zoomLevel = options.getInt("zoomLevel");
 							atBottom = options.getBoolean("atBottom");
 						} catch (JSONException e) {
 							LOG.e(TAG, "Error reading options");
@@ -87,7 +87,7 @@ public class MapKit extends CordovaPlugin {
 							
 							MapsInitializer.initialize(cordova.getActivity());
 							
-							LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, height);
+							LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height);
 							if (atBottom) {
 								mapView.setPadding(0, offsetTop, 0, 0);
 							} else {
@@ -133,7 +133,7 @@ public class MapKit extends CordovaPlugin {
 							// Moving the map to lot, lon
 							mapView.getMap().moveCamera(
 							    CameraUpdateFactory.newLatLngZoom(new LatLng(
-							            latitude, longitude), 15));
+							            latitude, longitude), zoomLevel));
 							cCtx.success();
 			                            
 							mapView.getMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
