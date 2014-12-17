@@ -85,7 +85,10 @@ public class MapKit extends CordovaPlugin {
 							mapView.onResume();
 							
 							ViewGroup parentView = (ViewGroup) webView.getParent();
-							parentView.addView(mapView);
+							if (atBottom)
+								parentView.addView(mapView);
+							else
+								parentView.addView(mapView,0);
 			                                
 							mapView.getMap().setMyLocationEnabled(false);
 							mapView.getMap().getUiSettings().setMyLocationButtonEnabled(true);
