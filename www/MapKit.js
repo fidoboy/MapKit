@@ -6,7 +6,7 @@
 		this.options = {
 			height: 460,
 			diameter: 1000,
-			zoomLevel: 17.0,
+			zoomLevel: 17,
 			atBottom: true,
 			lat: 41.652947,
 			lon: -4.728388
