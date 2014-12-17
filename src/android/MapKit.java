@@ -440,8 +440,12 @@ public class MapKit extends CordovaPlugin {
     
     @Override
     public void onBackPressed() {
+    	if(webView.canGoBack()){
+            webView.goBack();
+        }else{
+            finish();
+        }
 	super.onBackPressed();
-	mapView.onDestroy();
     }
 
     @Override
