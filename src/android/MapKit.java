@@ -79,7 +79,8 @@ public class MapKit extends CordovaPlugin {
                             mapView = new MapView(cordova.getActivity(),
                                     new GoogleMapOptions());
                             root = (ViewGroup) webView.getParent();
-                            root.removeView(webView);
+                            //root.removeView(webView);
+                            webView.setBackgroundColor(Color.TRANSPARENT);
                             main.addView(webView);
 
                             cordova.getActivity().setContentView(main);
