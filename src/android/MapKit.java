@@ -9,14 +9,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.graphics.Color;
 import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.WindowManager.LayoutParams;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 
@@ -53,7 +50,7 @@ public class MapKit extends CordovaPlugin {
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
-		main = new LinearLayout(cordova.getActivity());
+		//main = new LinearLayout(cordova.getActivity());
 	}
 
 	public void showMap(final JSONObject options) {
@@ -82,16 +79,28 @@ public class MapKit extends CordovaPlugin {
 							
 							// Main container layout
 							// LinearLayout main = new LinearLayout(cordova.getActivity());
-							main.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-							main.setOrientation(LinearLayout.VERTICAL);
-							main.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
-							main.setVerticalGravity(Gravity.CENTER_VERTICAL);
+							//main.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+							//main.setOrientation(LinearLayout.VERTICAL);
+							//main.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
+							//main.setVerticalGravity(Gravity.CENTER_VERTICAL);
 							
 							MapsInitializer.initialize(cordova.getActivity());
 							
-							mapView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+							LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, height);
+							if (atBottom) {
+								mapView.setPadding(0, offsetTop, 0, 0);
+							} else {
+								mapView.setPadding(0, offsetTop, 0, 0);
+							}
+							//params.gravity = Gravity.TOP | Gravity.LEFT;
+							
+							mapView.setOrientation(LinearLayout.VERTICAL);    
+							//mapView.setLayoutParams(params);
 							mapView.onCreate(null);
 							mapView.onResume();
+							
+							ViewGroup parentView = (ViewGroup) webView.getParent();
+							parentView.addView(mapView);
 			                                                
 							/*cordova.getActivity().setContentView(main);
 							
@@ -115,7 +124,7 @@ public class MapKit extends CordovaPlugin {
 							mapView.onCreate(null);
 							mapView.onResume(); // FIXME: I wish there was a better way
 							                // than this...*/
-							main.addView(mapView);
+							//main.addView(mapView);
 							
 							mapView.getMap().setMyLocationEnabled(true);
 							mapView.getMap().getUiSettings().setMyLocationButtonEnabled(false);
