@@ -320,7 +320,7 @@ public class MapKit extends CordovaPlugin {
 					if(type.equals("asset")) {
 						return BitmapDescriptorFactory.fromAsset(resource);
 					} else if (type.equals("file")) {
-						ImageLoader imgLoader = new ImageLoader(cCtx);
+						ImageLoader imgLoader = new ImageLoader(cordova.getActivity().getApplicationContext());
 						return BitmapDescriptorFactory.fromBitmap(imgLoader.getBitmap(resource));
 					}
 				}
