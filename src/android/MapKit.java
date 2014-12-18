@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.app.Dialog;
 import android.content.DialogInterface;
 
