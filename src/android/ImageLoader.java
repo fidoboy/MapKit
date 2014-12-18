@@ -32,10 +32,10 @@ public class ImageLoader {
         executorService=Executors.newFixedThreadPool(5);
     }
   
-    int stub_id = R.drawable.ic_launcher;
+    //int stub_id = R.drawable.ic_launcher;
     public void DisplayImage(String url, int loader, ImageView imageView)
     {
-        stub_id = loader;
+        //stub_id = loader;
         imageViews.put(imageView, url);
         Bitmap bitmap=memoryCache.get(url);
         if(bitmap!=null)
@@ -160,8 +160,8 @@ public class ImageLoader {
                 return;
             if(bitmap!=null)
                 photoToLoad.imageView.setImageBitmap(bitmap);
-            else
-                photoToLoad.imageView.setImageResource(stub_id);
+            //else
+            //    photoToLoad.imageView.setImageResource(stub_id);
         }
     }
   
