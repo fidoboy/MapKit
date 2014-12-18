@@ -39,7 +39,7 @@ public class MapKit extends CordovaPlugin {
 	private CallbackContext cCtx;
 	private String TAG = "MapKitPlugin";
 	private Marker lastClicked;
-	
+
 	double latitude = 0, longitude = 0;
 	int height = 460;
 	boolean atBottom = false;
@@ -50,7 +50,6 @@ public class MapKit extends CordovaPlugin {
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
-		//main = new LinearLayout(cordova.getActivity());
 	}
 
 	public void showMap(final JSONObject options) {
@@ -58,9 +57,9 @@ public class MapKit extends CordovaPlugin {
 			cordova.getActivity().runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-			        	if (mapView != null) {
-			        		mapView.setVisibility(mapView.VISIBLE);
-			        	} else {
+					if (mapView != null) {
+						mapView.setVisibility(mapView.VISIBLE);
+					} else {
 						try {
 							height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,options.getInt("height"), cordova.getActivity().getResources().getDisplayMetrics());
 							latitude = options.getDouble("lat");
@@ -71,52 +70,51 @@ public class MapKit extends CordovaPlugin {
 						} catch (JSONException e) {
 							LOG.e(TAG, "Error reading options");
 						}
-			
-			                        final int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(cordova.getActivity());
-			                        if (resultCode == ConnectionResult.SUCCESS) {
-							mapView = new MapView(cordova.getActivity(),
-								new GoogleMapOptions());
-							
+	
+						final int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(cordova.getActivity());
+						if (resultCode == ConnectionResult.SUCCESS) {
+							mapView = new MapView(cordova.getActivity(), new GoogleMapOptions());
+		
 							MapsInitializer.initialize(cordova.getActivity());
-							
+		
 							mapView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
 							mapView.setPadding(0, offsetTop, 0, 0);
 							mapView.onCreate(null);
 							mapView.onResume();
-							
+		
 							ViewGroup parentView = (ViewGroup) webView.getParent();
 							if (atBottom)
 								parentView.addView(mapView);
 							else
 								parentView.addView(mapView,0);
-			                                
+		
 							mapView.getMap().setMyLocationEnabled(true);
 							mapView.getMap().getUiSettings().setMyLocationButtonEnabled(true);
-							
+	
 							// Moving the map to lot, lon
 							mapView.getMap().moveCamera(
-							    CameraUpdateFactory.newLatLngZoom(new LatLng(
-							            latitude, longitude), zoomLevel));
+								   CameraUpdateFactory.newLatLngZoom(new LatLng(
+										   latitude, longitude), zoomLevel));
 							cCtx.success();
-			                            
+		
 							mapView.getMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 								@Override
 								public boolean onMarkerClick(final Marker marker) {
 										webView.loadUrl(
-												"javascript:annotationTap('" + 
-														marker.getSnippet() + 
-												"'.toString(), " + 
-														marker.getPosition().latitude + 
-												", " + 
-														marker.getPosition().longitude + 
+												"javascript:annotationTap('" +
+														marker.getSnippet() +
+												"'.toString(), " +
+														marker.getPosition().latitude +
+												", " +
+														marker.getPosition().longitude +
 												");");
-								        
-								        //set variable so we can close it later
-								        lastClicked = marker;
-								    return false;
+		
+										//set variable so we can close it later
+										lastClicked = marker;
+									return false;
 								}
 							});
-			                            
+	
 							mapView.getMap().setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 								@Override
 								public void onCameraChange(CameraPosition position) {
@@ -127,13 +125,13 @@ public class MapKit extends CordovaPlugin {
 									double bottom = vr.latLngBounds.southwest.latitude;
 									double longDelta = left - right;
 									double latDelta = top - bottom;
-									
+		
 									webView.loadUrl(
 											"javascript:geo.onMapMove(" +
-												position.target.latitude + 
-											"," + 
-												position.target.longitude + 
-											"," + 
+												position.target.latitude +
+											"," +
+												position.target.longitude +
+											"," +
 												latDelta +
 											"," +
 												longDelta +
@@ -141,7 +139,7 @@ public class MapKit extends CordovaPlugin {
 									return;
 								}
 							});
-			                            
+	
 							// set variables when infoWindows open, so we can tell when they close
 							mapView.getMap().setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 								@Override
@@ -149,51 +147,50 @@ public class MapKit extends CordovaPlugin {
 									if (infoWindowOpen == false) {
 										infoWindowOpen = true;
 									}
-							
+		
 									return null;
 								}
-							
+		
 								@Override
 								public View getInfoContents(Marker marker) {
 									return null;
 								}
 							});
-										
-							// when the map is clicked (not a pin or an infowindow), 
+	
+							// when the map is clicked (not a pin or an infowindow),
 							// find out if we just closed an infowindow and if so, call a javascript function
 							mapView.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 								@Override
-						        public void onMapClick(final LatLng latlng) {
-									
+								  public void onMapClick(final LatLng latlng) {
+		
 									if (infoWindowOpen == true) {
 										infoWindowOpen = false;
 										webView.loadUrl("javascript:annotationDeselect();");
 									}
-						        }
+								  }
 							});
-			
 						} else if (resultCode == ConnectionResult.SERVICE_MISSING ||
 							resultCode == ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED ||
 							resultCode == ConnectionResult.SERVICE_DISABLED) {
-							Dialog dialog = GooglePlayServicesUtil.getErrorDialog(resultCode, cordova.getActivity(), 1,
-								new DialogInterface.OnCancelListener() {
-									@Override
-									public void onCancel(DialogInterface dialog) {
-										cCtx.error("com.google.android.gms.common.ConnectionResult " + resultCode);
+								Dialog dialog = GooglePlayServicesUtil.getErrorDialog(resultCode, cordova.getActivity(), 1,
+									new DialogInterface.OnCancelListener() {
+										@Override
+										public void onCancel(DialogInterface dialog) {
+											cCtx.error("com.google.android.gms.common.ConnectionResult " + resultCode);
+										}
 									}
-			                                        }
-							);
-							dialog.show();
-			                        }
-			                }
-			        }
+								);
+								dialog.show();
+						}
+					}
+				}
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
 			cCtx.error("MapKitPlugin::showMap(): An exception occured");
 		}
 	}
-    
+
 	public void setMapData(final JSONObject options) {
 		try {
 			cordova.getActivity().runOnUiThread(new Runnable() {
@@ -232,7 +229,7 @@ public class MapKit extends CordovaPlugin {
 				@Override
 				public void run() {
 					String hideMethod = "";
-			        	// if we're not destroying the map, then just hide it...
+					   	// if we're not destroying the map, then just hide it...
 					if (mapView != null && !hideMethod.equals("destroy")) {
 						if (lastClicked != null) {
 							lastClicked.hideInfoWindow();
@@ -245,7 +242,7 @@ public class MapKit extends CordovaPlugin {
 						mapView = null;
 						cCtx.success();
 					}
-			        }
+				}
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -262,15 +259,15 @@ public class MapKit extends CordovaPlugin {
 						try {
 							for (int i = 0, j = pins.length(); i < j; i++) {
 								double latitude = 0, longitude = 0;
-								
+
 								JSONObject options = pins.getJSONObject(i);
 								latitude = options.getDouble("lat");
 								longitude = options.getDouble("lon");
-								
+
 								MarkerOptions mOptions = new MarkerOptions();
-								
+
 								mOptions.position(new LatLng(latitude,
-								                             longitude));
+															 longitude));
 								if(options.has("title")) {
 									mOptions.title(options.getString("title"));
 								}
@@ -283,7 +280,7 @@ public class MapKit extends CordovaPlugin {
 										mOptions.icon(bDesc);
 									}
 								}
-						
+
 								// adding Marker
 								// This is to prevent non existing asset resources to crash the app
 								try {
@@ -302,14 +299,14 @@ public class MapKit extends CordovaPlugin {
 					}
 				}
 			});
-	        } catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			cCtx.error("MapKitPlugin::addMapPins(): An exception occured");
-	        }
+		}
 	}
 
 	private BitmapDescriptor getBitmapDescriptor( final JSONObject iconOption ) {
-	        try {
+		try {
 			Object o = iconOption.get("icon");
 			String type = null, resource = null;
 			if( o.getClass().getName().equals("org.json.JSONObject" ) ) {
@@ -320,15 +317,19 @@ public class MapKit extends CordovaPlugin {
 					if(type.equals("asset")) {
 						return BitmapDescriptorFactory.fromAsset(resource);
 					} else if (type.equals("file")) {
-						ImageLoader imgLoader = new ImageLoader(cordova.getActivity().getApplicationContext());
-						return BitmapDescriptorFactory.fromBitmap(imgLoader.getBitmap(resource));
+						//ImageLoader imgLoader = new ImageLoader(cordova.getActivity().getApplicationContext());
+						//return BitmapDescriptorFactory.fromBitmap(imgLoader.getBitmap(resource));
+						URL url;
+						url = new URL(resource);
+						bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+						return BitmapDescriptorFactory.fromResource(bmp);
 					}
 				}
 			} else {
 				//this is a simple change in the icon's color
 				return BitmapDescriptorFactory.defaultMarker(Float.parseFloat(o.toString()));
 			}
-	        } catch (JSONException e){
+		} catch (JSONException e){
 			e.printStackTrace();
 		}
 		return null;
@@ -346,8 +347,8 @@ public class MapKit extends CordovaPlugin {
 				}
 			});
 		} catch (Exception e) {
-		    e.printStackTrace();
-		    cCtx.error("MapKitPlugin::clearMapPins(): An exception occured");
+			e.printStackTrace();
+			cCtx.error("MapKitPlugin::clearMapPins(): An exception occured");
 		}
 	}
 
@@ -363,13 +364,13 @@ public class MapKit extends CordovaPlugin {
 						} catch (JSONException e) {
 							LOG.e(TAG, "Error reading options");
 						}
-			
+
 						//Don't want to set the map type if it's the same
 						if(mapView.getMap().getMapType() != mapType) {
 							mapView.getMap().setMapType(mapType);
 						}
 					}
-	
+
 					cCtx.success();
 				}
 			});
@@ -394,24 +395,24 @@ public class MapKit extends CordovaPlugin {
 			changeMapType(args.getJSONObject(0));
 		}
 		LOG.d(TAG, action);
-		
+
 		return true;
-    	}
+	}
 
 	@Override
 	public void onPause(boolean multitasking) {
 		LOG.d(TAG, "MapKitPlugin::onPause()");
 		if (mapView != null) {
-		    mapView.onPause();
+			mapView.onPause();
 		}
 		super.onPause(multitasking);
 	}
-    
+
 	@Override
 	public void onResume(boolean multitasking) {
 		LOG.d(TAG, "MapKitPlugin::onResume()");
 		if (mapView != null) {
-		    mapView.onResume();
+			mapView.onResume();
 		}
 		super.onResume(multitasking);
 	}
@@ -420,7 +421,7 @@ public class MapKit extends CordovaPlugin {
 	public void onDestroy() {
 		LOG.d(TAG, "MapKitPlugin::onDestroy()");
 		if (mapView != null) {
-		    mapView.onDestroy();
+			mapView.onDestroy();
 		}
 		super.onDestroy();
 	}
