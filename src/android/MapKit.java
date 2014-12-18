@@ -1,5 +1,9 @@
 package com.phonegap.plugins.mapkit;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
