@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
-
+import android.graphics.Bitmap;
 import android.app.Dialog;
 import android.content.DialogInterface;
 
@@ -323,9 +323,8 @@ public class MapKit extends CordovaPlugin {
 					} else if (type.equals("file")) {
 						//ImageLoader imgLoader = new ImageLoader(cordova.getActivity().getApplicationContext());
 						//return BitmapDescriptorFactory.fromBitmap(imgLoader.getBitmap(resource));
-						URL url;
-						url = new URL(resource);
-						bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+						URL url = new URL(resource);
+						Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
 						return BitmapDescriptorFactory.fromResource(bmp);
 					}
 				}
