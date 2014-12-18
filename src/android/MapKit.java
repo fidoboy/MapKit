@@ -319,6 +319,8 @@ public class MapKit extends CordovaPlugin {
 					resource = icon.getString("resource");
 					if(type.equals("asset")) {
 						return BitmapDescriptorFactory.fromAsset(resource);
+					} else if (type.equals("file")) {
+						return BitmapDescriptorFactory.fromFile(resource);
 					}
 				}
 			} else {
