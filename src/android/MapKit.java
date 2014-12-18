@@ -287,7 +287,8 @@ public class MapKit extends CordovaPlugin {
 								// adding Marker
 								// This is to prevent non existing asset resources to crash the app
 								try {
-									mapView.getMap().addMarker(mOptions);
+									Marker marker = mapView.getMap().addMarker(mOptions);
+									marker.showInfoWindow();
 								} catch(NullPointerException e) {
 									LOG.e(TAG, "An error occurred when adding the marker. Check if icon exists");
 								}
