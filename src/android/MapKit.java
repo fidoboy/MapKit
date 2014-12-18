@@ -1,8 +1,10 @@
 package com.phonegap.plugins.mapkit;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.MalformedURLException;
 
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
@@ -324,9 +326,15 @@ public class MapKit extends CordovaPlugin {
 					} else if (type.equals("file")) {
 						//ImageLoader imgLoader = new ImageLoader(cordova.getActivity().getApplicationContext());
 						//return BitmapDescriptorFactory.fromBitmap(imgLoader.getBitmap(resource));
-						URL url = new URL(resource);
-						Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-						return BitmapDescriptorFactory.fromBitmap(bmp);
+						try {
+							URL url = new URL(resource);
+							Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+							return BitmapDescriptorFactory.fromBitmap(bmp);
+						} catch(MalformedURLException e) {
+							e.printStackTrace();
+						} catch(IOException ex) {
+							e.printStackTrace();
+						}
 					}
 				}
 			} else {
