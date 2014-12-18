@@ -326,7 +326,7 @@ public class MapKit extends CordovaPlugin {
 						//return BitmapDescriptorFactory.fromBitmap(imgLoader.getBitmap(resource));
 						URL url = new URL(resource);
 						Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-						return BitmapDescriptorFactory.fromResource(bmp);
+						return BitmapDescriptorFactory.fromBitmap(bmp);
 					}
 				}
 			} else {
