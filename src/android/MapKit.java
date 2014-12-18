@@ -332,7 +332,7 @@ public class MapKit extends CordovaPlugin {
 							return BitmapDescriptorFactory.fromBitmap(bmp);
 						} catch(MalformedURLException e) {
 							e.printStackTrace();
-						} catch(IOException ex) {
+						} catch(IOException e) {
 							e.printStackTrace();
 						}
 					}
