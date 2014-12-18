@@ -33,66 +33,6 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.VisibleRegion;
 
-public static Bitmap getBitmap(String url,Context context) {
-	FileCache fileCache=new FileCache(context);
-	MemoryCache memoryCache=new MemoryCache();
-	File f=fileCache.getFile(url);
-	Bitmap b = decodeFile(f);
-	if(b!=null)
-		return b;
-        try {
-		Bitmap bitmap=null;
-		URL imageUrl = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
-		conn.setConnectTimeout(30000);
-		conn.setReadTimeout(30000);
-		conn.setInstanceFollowRedirects(true);
-		InputStream is=conn.getInputStream();
-		OutputStream os = new FileOutputStream(f);
-		Utils.CopyStream(is, os);
-		os.close();
-		conn.disconnect();
-		b = decodeFile(f);
-		return bitmap;
-        } catch (Throwable ex){
-		ex.printStackTrace();
-		if(ex instanceof OutOfMemoryError)
-			memoryCache.clear();
-		return null;
-        }
-}
-	
-private static Bitmap decodeFile(File f){
-	try {
-		BitmapFactory.Options o = new BitmapFactory.Options();
-		o.inJustDecodeBounds = true;
-		FileInputStream stream1=new FileInputStream(f);
-		BitmapFactory.decodeStream(stream1,null,o);
-		stream1.close();
-		final int REQUIRED_SIZE=85;
-		int width_tmp=o.outWidth, height_tmp=o.outHeight;
-		int scale=1;
-		while(true){
-			if(width_tmp/2<REQUIRED_SIZE || height_tmp/2<REQUIRED_SIZE)
-				break;
-			width_tmp/=2;
-			height_tmp/=2;
-			scale*=2;
-		}
-
-		BitmapFactory.Options o2 = new BitmapFactory.Options();
-		o2.inSampleSize=scale;
-		FileInputStream stream2=new FileInputStream(f);
-		Bitmap bitmap=BitmapFactory.decodeStream(stream2, null, o2);
-		stream2.close();
-		return bitmap;
-	} catch (FileNotFoundException e) {
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-	return null;
-}
-
 public class MapKit extends CordovaPlugin {
 	protected LinearLayout main; // new layout to support map
 	protected MapView mapView;
@@ -380,7 +320,7 @@ public class MapKit extends CordovaPlugin {
 					if(type.equals("asset")) {
 						return BitmapDescriptorFactory.fromAsset(resource);
 					} else if (type.equals("file")) {
-						return BitmapDescriptorFactory.fromResource(getBitmap(resource,cCtx))));
+						return BitmapDescriptorFactory.fromFile(resource);
 					}
 				}
 			} else {
