@@ -38,7 +38,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.VisibleRegion;
 
 public class MapKit extends CordovaPlugin {
-	protected LinearLayout main; // new layout to support map
+	//protected LinearLayout main; // new layout to support map
 	protected MapView mapView;
 	private CallbackContext cCtx;
 	private String TAG = "MapKitPlugin";
@@ -242,7 +242,7 @@ public class MapKit extends CordovaPlugin {
 						cCtx.success();
 					} else {
 						mapView.onDestroy();
-						main.removeView(mapView);
+						//main.removeView(mapView);
 						mapView = null;
 						cCtx.success();
 					}
