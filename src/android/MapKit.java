@@ -90,7 +90,7 @@ public class MapKit extends CordovaPlugin {
 							else
 								parentView.addView(mapView,0);
 			                                
-							mapView.getMap().setMyLocationEnabled(false);
+							mapView.getMap().setMyLocationEnabled(true);
 							mapView.getMap().getUiSettings().setMyLocationButtonEnabled(true);
 							
 							// Moving the map to lot, lon
